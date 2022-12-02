@@ -4,12 +4,8 @@ import "fmt"
 
 func vyriesPostupnost() {
 	postupnost := zasobnik{1, 2}
-	for {
-		if noveCislo(postupnost) <= 10000 {
-			postupnost = append(postupnost, noveCislo(postupnost))
-		} else {
-			break
-		}
+	for i := 1; i < 11; i++ {
+		postupnost = append(postupnost, noveCislo(postupnost))
 	}
 
 	fmt.Println(postupnost)
