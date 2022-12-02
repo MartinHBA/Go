@@ -15,11 +15,11 @@ func getDefensiveMove(myBoard Board) move {
 		z := 0
 		if myBoard[i][i] == "X" {
 			resultDiag++
-			fmt.Println(i, i, "diag -1- is ", resultDiag)
+			//fmt.Println(i, i, "diag -1- is ", resultDiag)
 		}
 		if myBoard[4-i][i] == "X" {
 			resultDiag2++
-			fmt.Println(4-i, i, " diag -2- is ", resultDiag2)
+			//fmt.Println(4-i, i, " diag -2- is ", resultDiag2)
 		}
 		for _, rowVal := range myBoard[i] {
 			if rowVal == "X" {
