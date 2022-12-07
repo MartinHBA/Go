@@ -1,0 +1,30 @@
+<html>
+  <head>
+    <style>
+      input[type="text"] {
+        font-size: 24px;
+        width: 80%;
+        text-align: left;
+      }
+
+      input[type="submit"] {
+        font-size: 24px;
+      }
+
+      p {
+        font-size: 24px;
+        text-align: center;
+      }
+    </style>
+  </head>
+  <body>
+    <form action="/" method="POST">
+      {{if .Message}}
+      <input type="text" name="text">
+      <br><br>
+      <input type="submit">
+      <p>You entered: {{.Message}}</p>
+    </form>
+    {{end}}
+  </body>
+</html>
