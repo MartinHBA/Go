@@ -1,12 +1,30 @@
 package main
 
 import (
+	"bufio"
 	"bytes"
 	"encoding/json"
 	"fmt"
 	"io/ioutil"
 	"net/http"
+	"os"
 )
+
+func readMyToken() string {
+	// Open the file.
+	f, _ := os.Open("token.txt")
+	// Create a new Scanner for the file.
+	scanner := bufio.NewScanner(f)
+	// Loop over all lines in the file and print them.
+	var lineNumber int
+	for scanner.Scan() {
+		if lineNumber == 0 {
+			return scanner.Text()
+		}
+		lineNumber++
+	}
+	return ""
+}
 
 func translateToSK(mystring string) string {
 	// Set up the request to the DeepL API.
@@ -24,7 +42,8 @@ func translateToSK(mystring string) string {
 	}
 	req, _ := http.NewRequest("POST", url, bytes.NewBuffer(payload))
 	req.Header.Set("Content-Type", "application/json")
-	req.Header.Set("Authorization", "DeepL-Auth-Key 6ca9aa99-1bcc-11d7-ae8b-61a774bb1618:fx")
+	token := readMyToken()
+	req.Header.Set("Authorization", token)
 
 	// Send the request and get the response.
 	client := &http.Client{}

@@ -1,37 +1,84 @@
 package main
 
 import (
+	"html/template"
+	"log"
 	"net/http"
-	"text/template"
 )
 
-type Page struct {
+// this struct represents the data that will be used to
+// populate the form on the website
+type InputData struct {
+	Text    string
 	Message string
 }
 
 func main() {
+	// create a new http.Server and bind it to the default
+	// http port (:80)
+	server := &http.Server{
+		Addr: ":8080",
+	}
 
+	// create a new HTTP handler for the "/" route
 	http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
+		// check if this is a POST request
 		if r.Method == "POST" {
-			// Get the text input from the form.
+			// parse the form data
+			err := r.ParseForm()
+			if err != nil {
+				log.Println(err)
+				return
+			}
+
+			// get the text input from the form
 			text := r.FormValue("text")
+			translation := translateToSK(text)
+			// create a new InputData struct and populate it with
+			// the user's input and a message to display
+			data := InputData{
+				Text:    translation,
+				Message: "You entered: " + translation,
+			}
 
-			//translate text
-			translatedText := (translateToSK(text))
+			// execute the template and write the output to the
+			// http.ResponseWriter
+			tmpl, err := template.ParseFiles("form.html")
+			if err != nil {
+				log.Println(err)
+				return
+			}
+			err = tmpl.Execute(w, data)
+			if err != nil {
+				log.Println(err)
+				return
+			}
+			return
+		}
 
-			// Set the message to be displayed on the page.
-			p := Page{Message: translatedText}
+		// if this is not a POST request, then render the form
+		tmpl, err := template.ParseFiles("form.html")
+		if err != nil {
+			log.Println(err)
+			return
+		}
 
-			// Execute the HTML template with the message.
-			t, _ := template.ParseFiles("form.html")
-			t.Execute(w, p)
-		} else {
-			// Display the initial form if the request is not a POST request.
-			t, _ := template.ParseFiles("form.html")
-			t.Execute(w, nil)
+		// create a new InputData struct and populate it with
+		// some default values
+		data := InputData{
+			Text:    "",
+			Message: "",
+		}
+
+		// execute the template and write the output to the
+		// http.ResponseWriter
+		err = tmpl.Execute(w, data)
+		if err != nil {
+			log.Println(err)
+			return
 		}
 	})
 
-	// Start the server and listen for requests on port 8080.
-	http.ListenAndServe(":8080", nil)
+	// start the HTTP server
+	log.Fatal(server.ListenAndServe())
 }

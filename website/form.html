@@ -1,30 +1,17 @@
+<!-- form.html -->
 <html>
-  <head>
-    <style>
-      input[type="text"] {
-        font-size: 24px;
-        width: 80%;
-        text-align: left;
-      }
-
-      input[type="submit"] {
-        font-size: 24px;
-      }
-
-      p {
-        font-size: 24px;
-        text-align: center;
-      }
-    </style>
-  </head>
-  <body>
-    <form action="/" method="POST">
-      {{if .Message}}
-      <input type="text" name="text">
-      <br><br>
-      <input type="submit">
-      <p>You entered: {{.Message}}</p>
-    </form>
-    {{end}}
-  </body>
+	<head>
+		<title>Form Test</title>
+	</head>
+	<body>
+		<!-- the form will submit to the "/" route -->
+		<form action="/" method="post">
+			<!-- the "text" field will be populated with the value of the
+				 Text field from the InputData struct -->
+			<input type="text" name="text" value="{{.Text}}">
+			<button type="submit">Submit</button>
+		</form>
+		<!-- this is where the message will be displayed -->
+		<p>{{.Message}}</p>
+	</body>
 </html>
