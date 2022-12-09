@@ -1,17 +1,42 @@
 <!-- form.html -->
 <html>
-	<head>
-		<title>Form Test</title>
-	</head>
-	<body>
-		<!-- the form will submit to the "/" route -->
-		<form action="/" method="post">
-			<!-- the "text" field will be populated with the value of the
+
+<head>
+	<title>Form Test</title>
+	<!-- include the Material Design CSS and JavaScript libraries -->
+	<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+	<link rel="stylesheet" href="https://code.getmdl.io/1.3.0/material.indigo-pink.min.css">
+	<script defer src="https://code.getmdl.io/1.3.0/material.min.js"></script>
+	<!-- include a stylesheet in the head section to add custom styles -->
+	<link rel="stylesheet" type="text/css" href="styles.css">
+</head>
+
+<body>
+	<!-- use the Material Design components to create the form -->
+	<form action="/" method="post" class="mdl-grid">
+		<!-- the "text" field will be populated with the value of the
 				 Text field from the InputData struct -->
-			<input type="text" name="text" value="{{.Text}}">
-			<button type="submit">Submit</button>
-		</form>
-		<!-- this is where the message will be displayed -->
-		<p>{{.Message}}</p>
-	</body>
+		<div class="mdl-cell mdl-cell--12-col">
+			<div class="mdl-textfield mdl-js-textfield">
+				<input class="mdl-textfield__input" type="text" name="text" value="{{.Text}}">
+				<label class="mdl-textfield__label" for="text">Text...</label>
+			</div>
+		</div>
+
+		<!-- use the Material Design "raised" button for the submit button -->
+		<button type="submit" class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored">
+			Submit
+		</button>
+	</form>
+
+	<!-- this is where the message will be displayed -->
+	<p>{{.Message}}</p>
+
+	<!-- include the stylesheet here, so it will be applied to the elements on the page -->
+	<style>
+		/* add some styles here to customize the Material Design elements */
+	</style>
+</body>
+
+
 </html>
